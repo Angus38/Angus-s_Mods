@@ -1,0 +1,465 @@
+package tutorial.DMAexample;
+
+//Recipes - Very important imports for creating recipes
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.item.ItemFood;
+import net.minecraft.item.ItemStack;
+import net.minecraft.init.Items;
+import net.minecraft.init.Blocks;
+import net.minecraftforge.common.MinecraftForge;
+//import net.minecraftforge.common.util.EnumHelper;
+import net.minecraft.item.crafting.FurnaceRecipes;
+import cpw.mods.fml.common.registry.EntityRegistry;
+import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.common.registry.LanguageRegistry;
+import net.minecraftforge.common.util.EnumHelper;
+
+import tutorial.DMAexample.MyBlocks.CopperOre;
+//MyBlocks
+import tutorial.DMAexample.MyBlocks.HardDirtBlock;
+import tutorial.DMAexample.MyBlocks.HardOre;
+import tutorial.DMAexample.MyBlocks.BaseBlock;
+import tutorial.DMAexample.MyBlocks.MyIceBlock;
+import tutorial.DMAexample.MyBlocks.MyTntBlock;
+import tutorial.DMAexample.MyBlocks.MyBlockSlide;
+import tutorial.DMAexample.MyEntities.DeathBallEntity;
+//MyItems
+import tutorial.DMAexample.MyItems.BaseItem;
+import tutorial.DMAexample.MyItems.CustomAxe;
+import tutorial.DMAexample.MyItems.CustomSword;
+import tutorial.DMAexample.MyItems.MyLauncherItem;
+import tutorial.DMAexample.MyItems.MyBowItem;
+//OreGen
+import tutorial.DMAexample.MyOreGenerator;
+
+
+//MyCreative Tab
+import net.minecraft.creativetab.CreativeTabs;
+
+
+
+//Blocks
+import java.util.List;
+
+import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemArmor.ArmorMaterial;
+import net.minecraft.util.IIcon;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
+//Items
+import net.minecraft.util.MathHelper;
+
+public class MyCode {
+	
+	//Custom Creative Tab
+	public static CreativeTabs tabMyMod = new MyCreativeTab("MyMod");
+	
+	//List Blocks and Items Here
+	
+	//Blocks
+	public static Block hardDirt;
+	public static Block hardOre;
+	public static Block harderDirt;
+	public static Block copperOre;
+	public static Block steelBlock;
+	
+	//Items
+	public static Item MyBow;
+	public static Item MyLauncher;
+	public static Item myCustomAxe;
+	public static Item myCustomSword;
+	public static Item MyFood;
+	public static Item BronzeIngot;
+
+	
+	
+	//Tool
+	//public static Item axeTutorial;
+    
+	
+	public static Item.ToolMaterial PLA = EnumHelper.addToolMaterial("PLA", 3, 192, 5.0F, 1.5F, 12);
+
+	
+	//Tool Material
+	//public static Item.ToolMaterial exampleMaterial = EnumHelper.addToolMaterial("examplematerial",  2, 1000, 6.0F, 2.0F, 5);	
+	//public static final ArmorMaterial CUS TOM_MATERIAL= EnumHelper.addArmorMaterial("Custom", 5, new int[] {1,3,2,1}, 5);
+	
+	public static void MyBlocks(){
+	
+		//Harden Dirt
+		 hardDirt = new MyBlockSlide(Material.ground)
+         .setHardness(2.0F)
+         .setStepSound(Block.soundTypeGravel)
+         .setBlockName("hardDirt")
+         .setCreativeTab(CreativeTabs.tabBlock)
+         .setBlockTextureName("dirt");
+		 
+		//Harden Dirt
+		 harderDirt = new BaseBlock(Material.ground)
+         .setHardness(12.0F)
+         .setStepSound(Block.soundTypeGravel)
+         .setBlockName("harderDirt")
+         .setCreativeTab(CreativeTabs.tabBlock)
+         .setBlockTextureName("yourmodsname:mycom_block");
+		 
+		 //Harden Ore
+		 hardOre = new HardOre(Material.iron)
+		 .setHardness(0.9F)
+         .setStepSound(Block.soundTypeGravel)
+         .setBlockName("hardOre")
+         .setCreativeTab(CreativeTabs.tabBlock)
+         .setBlockTextureName("yourmodsname:my_dragon_egg");
+		 
+		 //Copper Ore
+		 copperOre = new CopperOre(Material.iron)
+		 .setHardness(4.0F)
+         .setStepSound(Block.soundTypeStone)
+         .setBlockName("copperore")
+         .setCreativeTab(CreativeTabs.tabBlock)
+         .setBlockTextureName("yourmodsname:copper_ore");
+		 
+		 
+		 
+		 //Steel Block
+		 steelBlock = new BaseBlock(Material.iron)
+		 .setHardness(2.0F)
+         .setStepSound(Block.soundTypeStone)
+         .setBlockName("steelblock")
+         .setCreativeTab(CreativeTabs.tabBlock)
+         .setBlockTextureName("yourmodsname:steel_block");
+		 
+		 		 
+		 //Harvest Level
+		 hardDirt.setHarvestLevel("shovel", 1);
+		 hardOre.setHarvestLevel("pickaxe", 3);		 
+		 copperOre.setHarvestLevel("pickaxe", 1);
+		 steelBlock.setHarvestLevel("pickaxe", 2);
+		 
+		 
+		 
+		 //Register Blocks
+		 GameRegistry.registerBlock(hardDirt, "HardDirt");
+		 GameRegistry.registerBlock(hardOre, "HardOre");
+		 GameRegistry.registerBlock(harderDirt, "HarderDirt");
+		 GameRegistry.registerBlock(copperOre, "Copper Ore");
+		 GameRegistry.registerBlock(steelBlock, "Steel Block");
+		 
+		 MyOreGenerator ore_gen = new MyOreGenerator();
+		 GameRegistry.registerWorldGenerator(ore_gen, 0);
+		 //For Generating Ores in Game - Day 5
+		
+	}
+	
+	public static void MyRecipes()
+	{
+		
+	//Shapeless - First Shapeless Recipe (CommandBlock from Red Stone Torch)
+		GameRegistry.addShapelessRecipe(new ItemStack(Blocks.command_block), new Object[] { new ItemStack(Blocks.redstone_torch) });
+				
+		
+	//Shaped  
+		
+		//Comment Every Recipe!!!!!!!!!!!!!!!!!!! Pumpkin Pie from cactus, gold, cocoa beans.
+		//This recipe is so expensive because pumpkin pie is hard to make
+		 GameRegistry.addRecipe(new ItemStack(hardOre, 10), new Object[] 
+					{
+				    " AD", "AB ", " C ",
+					'A', Blocks.gold_block,
+					'B', new ItemStack(Items.dye, 1, 3),
+				    'C', Blocks.cactus,
+				    'D', hardDirt,
+					});
+		 
+		 ItemStack sharpSteak = new ItemStack(MyBow);
+		 sharpSteak.addEnchantment(Enchantment.sharpness, 300);
+		 //sharpSteak.addEnchantment(Enchantment.sharpness, 3);
+		 
+		 
+		 
+		
+
+		 //Steel Block
+		 GameRegistry.addRecipe(new ItemStack(steelBlock, 1), new Object[] 
+				 	{
+				 	"AAA", "AAA", "AAA" ,
+				 	'A', new ItemStack(Items.stick) ,
+				 	});
+		 
+		 
+		 
+		 
+		
+		 
+		 //Bronze Chestplate
+		 GameRegistry.addRecipe(new ItemStack(copperOre, 1), new Object[] 
+				 	{
+				 	"A A", "AAA", "AAA" ,
+				 	'A', new ItemStack(Items.sugar) ,
+				 	});
+		
+		 
+		 //Bronze leggings
+		 GameRegistry.addRecipe(new ItemStack(copperOre, 1), new Object[] 
+				 	{
+				 	"AAA", "A A", "A A" ,
+				 	'A', new ItemStack(Items.sugar) ,
+				 	});
+		 
+		
+		 //Bronze Helmet
+		 GameRegistry.addRecipe(new ItemStack(copperOre, 1), new Object[] 
+				 	{
+				 	"AAA", "A A", "   " ,
+				 	'A', new ItemStack(Items.sugar) ,
+				 	});
+		 
+		 
+		//Bronze Helmet #2
+		 GameRegistry.addRecipe(new ItemStack(copperOre, 1), new Object[] 
+				 	{
+				 	"   ", "AAA", "A A" ,
+				 	'A', new ItemStack(Items.sugar) ,
+				 	});
+		 
+		 
+		 
+		 //Bronze Boots
+		 GameRegistry.addRecipe(new ItemStack(copperOre, 1), new Object[] 
+				 	{
+				 	"   ", "A A", "A A" ,
+				 	'A', new ItemStack(Items.sugar) ,
+				 	});
+		 
+		 
+		 
+		 //Bronze Boots #2
+		 GameRegistry.addRecipe(new ItemStack(copperOre, 1), new Object[] 
+				 	{
+				 	"A A", "A A", "   " ,
+				 	'A', new ItemStack(Items.sugar) ,
+				 	});
+		 
+		 
+		 //Bronze Pickaxe
+		 GameRegistry.addRecipe(new ItemStack(copperOre, 1), new Object[] 
+				 	{
+				 	"AAA", " B ", " B " ,
+				 	'A', new ItemStack(Items.sugar) ,
+				 	'B', new ItemStack(Items.stick),
+				 	});
+		 
+		 
+		 //Bronze Axe
+		 GameRegistry.addRecipe(new ItemStack(copperOre, 1), new Object[] 
+				 	{
+				 	" AA", " BA", " B " ,
+				 	'A', new ItemStack(Items.sugar) ,
+				 	'B', new ItemStack(Items.stick),
+				 	});
+		 
+		 
+		 //Bronze Axe #2
+		 GameRegistry.addRecipe(new ItemStack(copperOre, 1), new Object[] 
+				 	{
+				 	"AA ", "AB ", " B " ,
+				 	'A', new ItemStack(Items.sugar) ,
+				 	'B', new ItemStack(Items.stick),
+				 	});
+		 
+		 
+		 //Bronze Shovel
+		 GameRegistry.addRecipe(new ItemStack(copperOre, 1), new Object[] 
+				 	{
+				 	" A ", " B ", " B " ,
+				 	'A', new ItemStack(Items.sugar) ,
+				 	'B', new ItemStack(Items.stick),
+				 	});
+		 
+		 
+		 //Bronze Hoe
+		 GameRegistry.addRecipe(new ItemStack(copperOre, 1), new Object[] 
+				 	{
+				 	" AA", " B ", " B " ,
+				 	'A', new ItemStack(Items.sugar) ,
+				 	'B', new ItemStack(Items.stick),
+				 	});
+		 
+		 
+		 
+		 //Bronze Hoe #2
+		 GameRegistry.addRecipe(new ItemStack(copperOre, 1), new Object[] 
+				 	{
+				 	"AA ", " B ", " B " ,
+				 	'A', new ItemStack(Items.sugar) ,
+				 	'B', new ItemStack(Items.stick),
+				 	});
+		 
+		 
+		 
+		 //Bronze Sword
+		 GameRegistry.addRecipe(new ItemStack(copperOre, 1), new Object[] 
+				 	{
+				 	" A ", " A ", " B " ,
+				 	'A', new ItemStack(Items.sugar) ,
+				 	'B', new ItemStack(Items.stick),
+				 	});
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 //Iron Blaze Sword*****
+		 
+		 
+		 ItemStack I_B_Sword = new ItemStack(Items.iron_sword);
+		 I_B_Sword.addEnchantment(Enchantment.fireAspect, 3);
+		 
+		 
+		 
+		 GameRegistry.addRecipe(I_B_Sword, new Object[] 
+				 	{
+				 	" A ", " A ", " B " ,
+				 	'A', new ItemStack(Items.iron_ingot) ,
+				 	'B', new ItemStack(Items.blaze_rod) 
+				 	});
+			
+		//Wooden Blaze Sword*****
+ 
+		 
+		 ItemStack W_B_Sword = new ItemStack(Items.wooden_sword);
+		 W_B_Sword.addEnchantment(Enchantment.fireAspect, 1);
+		 
+		 
+		 
+		 GameRegistry.addRecipe(W_B_Sword, new Object[] 
+				 	{
+				 	" A ", " A ", " B " ,
+				 	'A', Blocks.planks ,
+				 	'B', new ItemStack(Items.blaze_rod) 
+				 	});
+		 
+		//Stone Blaze Sword*****
+ 
+		 
+		 ItemStack S_B_Sword = new ItemStack(Items.stone_sword);
+		 S_B_Sword.addEnchantment(Enchantment.fireAspect, 2);
+		 
+		 
+		 
+		 GameRegistry.addRecipe(S_B_Sword, new Object[] 
+				 	{
+				 	" A ", " A ", " B " ,
+				 	'A', Blocks.cobblestone ,
+				 	'B', new ItemStack(Items.blaze_rod) 
+				 	});
+			
+		//Diamond Blaze Sword*****
+ 
+		 
+		 ItemStack D_B_Sword = new ItemStack(Items.diamond_sword);
+		 D_B_Sword.addEnchantment(Enchantment.fireAspect, 5);
+		 
+		 
+		 
+		 GameRegistry.addRecipe(D_B_Sword, new Object[] 
+				 	{
+				 	" A ", " A ", " B " ,
+				 	'A', new ItemStack(Items.diamond) ,
+				 	'B', new ItemStack(Items.blaze_rod) 
+				 	});
+			
+		
+		 //Gold Blaze Sword*****
+ 
+		 
+		 ItemStack 	G_B_Sword = new ItemStack(Items.golden_sword);
+		 G_B_Sword.addEnchantment(Enchantment.fireAspect, 4);
+		 
+		 
+		 
+		 GameRegistry.addRecipe(G_B_Sword, new Object[] 
+				 	{
+				 	" A ", " A ", " B " ,
+				 	'A', new ItemStack(Items.gold_ingot) ,
+				 	'B', new ItemStack(Items.blaze_rod) 
+				 	});
+			
+			
+		
+	//Smelting
+		
+		//Cookie Cooked Steak
+			GameRegistry.addSmelting(new ItemStack(Items.dye, 1, 3), new ItemStack(hardOre, 8), 1.0F);
+		
+		
+		
+		
+	}
+	
+	public static void MyItems()
+	{
+		
+		MyLauncher = new MyLauncherItem()
+		.setMaxStackSize(1)
+		.setUnlocalizedName("launcher_item");
+
+		/*
+		 MyBow = new MyBowItem()
+		 		.setMaxStackSize(1)
+		 		.setCreativeTab(CreativeTabs.tabBlock)
+		 		.setTextureName("yourmodsname:mybow")
+		 		.setUnlocalizedName("mybow");
+		 GameRegistry.registerItem(MyBow, "MyBow");
+		 */
+		
+		 MyFood = new ItemFood(6, 0.6F, false)
+		 .setUnlocalizedName("potatoBaked")
+		 .setTextureName("potato_baked");
+        	  
+         //Custom Sword
+         //myCustomSword = new CustomSword(PLA)
+         //.setUnlocalizedName("customsword");
+		//GameRegistry.registerItem(myCustomSword, "CustomSword");
+         
+		 //Custom Axe
+         // myCustomAxe = new CustomAxe(PLA)
+         // 	.setUnlocalizedName("mycustomaxe");
+		//GameRegistry.registerItem(myCustomAxe, "CustomAxe");
+         
+         
+         GameRegistry.registerItem(MyLauncher, "MyLauncher");
+         GameRegistry.registerItem(MyFood, "MyFood");
+         
+         
+         
+         
+         
+         
+         CreativeTabs tabCustom = new CreativeTabs("tabName") {
+        	    @Override
+        	    @SideOnly(Side.CLIENT)
+        	    public Item getTabIconItem() {
+        	    	
+        	        return Items.ender_eye;
+        	    }
+        	};
+         
+         
+       
+         
+         // GameRegistry.registerItem(axeTutorial, "axeTutorial");
+   
+		
+	}
+	
+ 
+
+}

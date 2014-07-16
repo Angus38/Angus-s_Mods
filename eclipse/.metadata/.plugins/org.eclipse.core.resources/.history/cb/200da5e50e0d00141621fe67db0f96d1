@@ -1,0 +1,8 @@
+package tutorial.DMAexample.MyItems;
+
+public class Snippet {
+	public static void main(String[] args) {
+		ItemArmor.class
+	}
+}
+

@@ -1,0 +1,90 @@
+package tutorial.DMAexample.MyItems;
+
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemAxe;
+import net.minecraft.item.ItemPickaxe;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemSword;
+import net.minecraft.item.ItemTool;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.item.ItemFood;
+import net.minecraft.item.ItemStack;
+import net.minecraft.init.Items;
+import net.minecraft.init.Blocks;
+import net.minecraftforge.common.MinecraftForge;
+//import net.minecraftforge.common.util.EnumHelper;
+import net.minecraft.item.crafting.FurnaceRecipes;
+import cpw.mods.fml.common.registry.EntityRegistry;
+import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.common.registry.LanguageRegistry;
+import net.minecraftforge.common.util.EnumHelper;
+
+import tutorial.DMAexample.MyBlocks.CopperOre;
+//MyBlocks
+import tutorial.DMAexample.MyBlocks.HardDirtBlock;
+import tutorial.DMAexample.MyBlocks.HardOre;
+import tutorial.DMAexample.MyBlocks.BaseBlock;
+import tutorial.DMAexample.MyBlocks.MyIceBlock;
+import tutorial.DMAexample.MyBlocks.MyTntBlock;
+import tutorial.DMAexample.MyBlocks.MyBlockSlide;
+import tutorial.DMAexample.MyEntities.DeathBallEntity;
+//MyItems
+import tutorial.DMAexample.MyItems.BaseItem;
+import tutorial.DMAexample.MyItems.CustomAxe;
+import tutorial.DMAexample.MyItems.CustomSword;
+import tutorial.DMAexample.MyItems.MyLauncherItem;
+import tutorial.DMAexample.MyItems.MyBowItem;
+//OreGen
+import tutorial.DMAexample.MyOreGenerator;
+
+
+//MyCreative Tab
+import net.minecraft.creativetab.CreativeTabs;
+
+
+
+//Blocks
+import java.util.List;
+
+import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemArmor.ArmorMaterial;
+import net.minecraft.util.IIcon;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
+//Items
+import net.minecraft.util.MathHelper;
+
+
+import com.google.common.collect.Sets;
+
+import java.util.Set;
+
+import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
+import net.minecraft.init.Blocks;
+
+public class bronzePickaxe extends ItemTool
+{
+    private static final Set field_150915_c = Sets.newHashSet(new Block[] {Blocks.cobblestone, Blocks.double_stone_slab, Blocks.stone_slab, Blocks.stone, Blocks.sandstone, Blocks.mossy_cobblestone, Blocks.iron_ore, Blocks.iron_block, Blocks.coal_ore, Blocks.gold_block, Blocks.gold_ore, Blocks.diamond_ore, Blocks.diamond_block, Blocks.ice, Blocks.netherrack, Blocks.lapis_ore, Blocks.lapis_block, Blocks.redstone_ore, Blocks.lit_redstone_ore, Blocks.rail, Blocks.detector_rail, Blocks.golden_rail, Blocks.activator_rail});
+    private static final String __OBFID = "CL_00000053";
+
+    protected bronzePickaxe(Item.ToolMaterial p_i45347_1_)
+    {
+        super(2.0F, p_i45347_1_, field_150915_c);
+    }
+
+    public boolean func_150897_b(Block p_150897_1_)
+    {
+        return p_150897_1_ == Blocks.obsidian ? this.toolMaterial.getHarvestLevel() == 5 : (p_150897_1_ != Blocks.diamond_block && p_150897_1_ != Blocks.diamond_ore ? (p_150897_1_ != Blocks.emerald_ore && p_150897_1_ != Blocks.emerald_block ? (p_150897_1_ != Blocks.gold_block && p_150897_1_ != Blocks.gold_ore ? (p_150897_1_ != Blocks.iron_block && p_150897_1_ != Blocks.iron_ore ? (p_150897_1_ != Blocks.lapis_block && p_150897_1_ != Blocks.lapis_ore ? (p_150897_1_ != Blocks.redstone_ore && p_150897_1_ != Blocks.lit_redstone_ore ? (p_150897_1_.getMaterial() == Material.rock ? true : (p_150897_1_.getMaterial() == Material.iron ? true : p_150897_1_.getMaterial() == Material.anvil)) : this.toolMaterial.getHarvestLevel() >= 2) : this.toolMaterial.getHarvestLevel() >= 1) : this.toolMaterial.getHarvestLevel() >= 1) : this.toolMaterial.getHarvestLevel() >= 2) : this.toolMaterial.getHarvestLevel() >= 2) : this.toolMaterial.getHarvestLevel() >= 2);
+    }
+
+    public float func_150893_a(ItemStack p_150893_1_, Block p_150893_2_)
+    {
+        return p_150893_2_.getMaterial() != Material.iron && p_150893_2_.getMaterial() != Material.anvil && p_150893_2_.getMaterial() != Material.rock ? super.func_150893_a(p_150893_1_, p_150893_2_) : this.efficiencyOnProperMaterial;
+    }
+}
+
